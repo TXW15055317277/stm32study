@@ -50,7 +50,6 @@
 ".\objects\key.o"
 ".\objects\key_exti.o"
 ".\objects\usart.o"
-".\objects\i2c.o"
 ".\objects\i2c_hardware.o"
 ".\objects\m24c02_h.o"
 --library_type=microlib --strict --scatter ".\Objects\STM32_.sct"

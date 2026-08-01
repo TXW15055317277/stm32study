@@ -100,8 +100,8 @@
       <flags>2</flags>
       <showCmd>3</showCmd>
       <MinPosition>
-        <xPos>-1</xPos>
-        <yPos>-1</yPos>
+        <xPos>-32000</xPos>
+        <yPos>-32000</yPos>
       </MinPosition>
       <MaxPosition>
         <xPos>-1</xPos>
@@ -3685,9 +3685,9 @@
       </Doc>
       <Doc>
         <Name>.\Driver\USART.h</Name>
-        <ColumnNumber>4</ColumnNumber>
+        <ColumnNumber>2</ColumnNumber>
         <TopLine>1</TopLine>
-        <CurrentLine>9</CurrentLine>
+        <CurrentLine>10</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
@@ -3711,7 +3711,7 @@
         <PaneID>0</PaneID>
       </Doc>
       <Doc>
-        <Name>Driver\I2C.h</Name>
+        <Name>C:\Users\TXW13\Desktop\学习\7.STM32_I2C_hardware\Driver\I2C.h</Name>
         <ColumnNumber>0</ColumnNumber>
         <TopLine>1</TopLine>
         <CurrentLine>15</CurrentLine>
