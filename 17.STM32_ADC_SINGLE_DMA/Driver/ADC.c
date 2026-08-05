@@ -46,7 +46,7 @@ void ADC_SINGLE_Init_(void)
     ADC1->SQR1 &= ~ADC_SQR1_L;
 
     // 第一个扫描设置为通道5
-    ADC1->SQR3 &= ADC_SQR3_SQ1;
+    ADC1->SQR3 &= ~ADC_SQR3_SQ1;
     ADC1->SQR3 |= 5 << 0;
 
     // 使能DMA以及EOC中断
@@ -63,7 +63,7 @@ void ADC_SINGLE_Init_(void)
     DMA2_Stream0->CR |= DMA_SxCR_TCIE;
 
     // 外设到存储器，这里把串口当作存储器
-    DMA2_Stream0->CR &= DMA_SxCR_DIR;
+    DMA2_Stream0->CR &= ~DMA_SxCR_DIR;
 
     // 循环模式
     DMA2_Stream0->CR |= DMA_SxCR_CIRC;
