@@ -869,6 +869,11 @@
               <FilePath>.\Driver\LCD.h</FilePath>
             </File>
             <File>
+              <FileName>lcdfont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Driver\lcdfont.c</FilePath>
+            </File>
+            <File>
               <FileName>lcdfont.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Driver\lcdfont.h</FilePath>

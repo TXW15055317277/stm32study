@@ -7,5 +7,5 @@ int main(void)
     FSMC_LCD_Init_();
     LCD_RefreshConfig();
 
-    LCD_SHOW_ASCII(0, 0, 12, 'a', BLACK, WHITE);
+    LCD_SHOW_ASCII(0, 0, 32, 'A', BLACK, WHITE);
 }

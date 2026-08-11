@@ -65,6 +65,7 @@
 ".\objects\fsmc_sram_s.o"
 ".\objects\fsmc_lcd.o"
 ".\objects\lcd.o"
+".\objects\lcdfont.o"
 ".\objects\flash_s.o"
 ".\objects\m24c02_h.o"
 ".\objects\flash_h.o"

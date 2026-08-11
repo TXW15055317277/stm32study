@@ -51,7 +51,7 @@ void LCD_RefreshConfig(void)
     LCD_WRITE_CMD(0xC7);/*VCMcontrol2*/
     LCD_WRITE_DATA(0XB7);
     LCD_WRITE_CMD(0x36);/*MemoryAccessControl*/
-    LCD_WRITE_DATA(0x48);
+    LCD_WRITE_DATA(0x08);/* 竖屏240x320: 去掉MX镜像(MX=0,MY=0,MV=0), 保留RGB顺序bit3 */
     LCD_WRITE_CMD(0x3A);
     LCD_WRITE_DATA(0x55);
     LCD_WRITE_CMD(0xB1);
@@ -203,83 +203,44 @@ void LCD_SET_AREA(uint16_t x_start, uint16_t y_start, uint16_t w, uint16_t h)
     LCD_WRITE_DATA(y_start >> 8);
     LCD_WRITE_DATA(y_start & 0xFF);
     LCD_WRITE_DATA((y_start + h - 1) >> 8);
-    LCD_WRITE_DATA((x_start + h - 1) & 0xFF);
+    LCD_WRITE_DATA((y_start + h - 1) & 0xFF);
 }
 
 void LCD_SHOW_ASCII(uint16_t x_start, uint16_t y_start, uint16_t char_size, uint8_t char_c, uint16_t color_c, uint16_t color_b)
 {
-    uint8_t row = char_c - ' ';
-    LCD_SET_AREA(x_start, y_start, char_size / 2, char_size);
-    LCD_WRITE_CMD(0x2C); // 写入数据到GRAM
-    if (char_size == 12 || char_size == 16)
+    uint8_t row = char_c - ' ';        // 字库索引（从空格开始）
+    uint8_t rows = 0, cols = 0;        // 字符高、宽（像素）
+    uint8_t bytes_per_col = 0;         // 每列字节数
+    const uint8_t *data = NULL;
+
+    // 本字库为"列优先"存储: 每个字符 = cols 列, 每列 bytes_per_col 字节(大端,MSB在顶),
+    // 名字前两位=高度, 后两位=宽度, 例如 2412 = 24 高 x 12 宽
+    switch (char_size)
     {
-        for (uint16_t i = 0; i < char_size; i++)
-        {
-            uint8_t rowdata = (char_size == 16) ? asc2_1608[row][i] : asc2_1206[row][i];
-            for (uint16_t j = 0; j < char_size / 2; j++)
-            {
-                if (rowdata & 0x01)
-                {
-                    LCD_WRITE_DATA(color_c);
-                }
-                else
-                {
-                    LCD_WRITE_DATA(color_b);
-                }
-                rowdata >>= 1;
-            }
-        }
+        case 12: rows = 12; cols = 6;  bytes_per_col = 2; data = (const uint8_t *)asc2_1206[row]; break;
+        case 16: rows = 16; cols = 8;  bytes_per_col = 2; data = (const uint8_t *)asc2_1608[row]; break;
+        case 24: rows = 24; cols = 12; bytes_per_col = 3; data = (const uint8_t *)asc2_2412[row]; break;
+        case 32: rows = 32; cols = 16; bytes_per_col = 4; data = (const uint8_t *)asc2_3216[row]; break;
+        default: return;
     }
-    else if (char_size == 24 || char_size == 32)
+
+    LCD_SET_AREA(x_start, y_start, cols, rows);
+    LCD_WRITE_CMD(0x2C); // 写入数据到GRAM
+
+    // GRAM 写入顺序: 行内列递增, 再换行 (for row : for col)
+    // 像素 (X=col, Y=row) = 第 col 列数据的第 row 位(该列最高位为顶部)
+    for (uint8_t i = 0; i < rows; i++)          // i = 行 (Y)
     {
-        const uint8_t *data = (char_size == 32) ? asc2_3216[row] : asc2_2412[row];
-        if (char_size == 24)
+        for (uint8_t j = 0; j < cols; j++)      // j = 列 (X)
         {
-            for (uint8_t i = 0; i < char_size; i++)
+            // 合成第 j 列的 bytes_per_col 个字节为大端整数
+            uint32_t coldata = 0;
+            for (uint8_t k = 0; k < bytes_per_col; k++)
             {
-                for (uint8_t j = 0; j < char_size / 2; j++)
-                {
-                    int bit_idx = i * 12 + j;
-
-                    uint8_t arr_idx = bit_idx / 8;   // 数组下标 0~35
-                    uint8_t bit_pos = bit_idx % 8;   // 字节内第几位 0~7
-
-                    // 读取该位
-                    uint8_t bit_val = (data[arr_idx] >> bit_pos) & 0x01;
-                    if (bit_val)
-                    {
-                        LCD_WRITE_DATA(color_c);
-                    }
-                    else
-                    {
-                        LCD_WRITE_DATA(color_b);
-                    }
-                }
+                coldata = (coldata << 8) | data[j * bytes_per_col + k];
             }
-        }
-        else
-        {
-            for (uint8_t i = 0; i < char_size; i++)
-            {
-                for (uint8_t j = 0; j < char_size / 2; j++)
-                {
-                    int bit_idx = i * 16 + j;
-
-                    uint8_t arr_idx = bit_idx / 8;   // 数组下标 0~64
-                    uint8_t bit_pos = bit_idx % 8;   // 字节内第几位 0~7
-
-                    // 读取该位
-                    uint8_t bit_val = (data[arr_idx] >> bit_pos) & 0x01;
-                    if (bit_val)
-                    {
-                        LCD_WRITE_DATA(color_c);
-                    }
-                    else
-                    {
-                        LCD_WRITE_DATA(color_b);
-                    }
-                }
-            }
+            uint32_t bit = 1UL << (bytes_per_col * 8 - 1 - i);
+            LCD_WRITE_DATA((coldata & bit) ? color_c : color_b);
         }
     }
 }
