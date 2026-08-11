@@ -1,8 +1,6 @@
 #include "USART.h"
 #include "LCD.h"
 
-uint8_t string[10] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
-
 int main(void)
 {
     USART_Init_(115200);
@@ -10,6 +8,6 @@ int main(void)
     LCD_RefreshConfig();
 
     LCD_SHOW_ASCII(0, 0, 32, 'A', BLACK, WHITE);
-    LCD_SHOW_STRING(224, 0, 32, string, 10, BLACK, WHITE);
+    LCD_SHOW_STRING(16, 0, 32, "zhangyuqing", BLACK, WHITE);
 
 }

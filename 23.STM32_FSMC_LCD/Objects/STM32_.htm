@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Objects\STM32_.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\STM32_.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Tue Aug 11 22:33:45 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Tue Aug 11 22:50:17 2026
 <BR><P>
-<H3>Maximum Stack Usage =        128 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        120 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 main &rArr; LCD_SHOW_STRING &rArr; LCD_SHOW_ASCII &rArr; LCD_SET_AREA
 <P>
@@ -473,8 +473,8 @@ Global Symbols
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[6c]"></a>LCD_SHOW_STRING</STRONG> (Thumb, 122 bytes, Stack size 44 bytes, lcd.o(i.LCD_SHOW_STRING))
-<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = LCD_SHOW_STRING &rArr; LCD_SHOW_ASCII &rArr; LCD_SET_AREA
+<P><STRONG><a name="[6c]"></a>LCD_SHOW_STRING</STRONG> (Thumb, 124 bytes, Stack size 36 bytes, lcd.o(i.LCD_SHOW_STRING))
+<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = LCD_SHOW_STRING &rArr; LCD_SHOW_ASCII &rArr; LCD_SET_AREA
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SHOW_ASCII
 </UL>
@@ -611,8 +611,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> printf3.o(i.__0printf$3)
 </UL>
-<P><STRONG><a name="[5c]"></a>main</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, main.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = main &rArr; LCD_SHOW_STRING &rArr; LCD_SHOW_ASCII &rArr; LCD_SET_AREA
+<P><STRONG><a name="[5c]"></a>main</STRONG> (Thumb, 62 bytes, Stack size 16 bytes, main.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = main &rArr; LCD_SHOW_STRING &rArr; LCD_SHOW_ASCII &rArr; LCD_SET_AREA
 </UL>
 <BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init_
 <LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SHOW_STRING

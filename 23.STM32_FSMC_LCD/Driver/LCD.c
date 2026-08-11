@@ -245,12 +245,17 @@ void LCD_SHOW_ASCII(uint16_t x_start, uint16_t y_start, uint16_t char_size, uint
     }
 }
 
-void LCD_SHOW_STRING(uint16_t x_start, uint16_t y_start, uint16_t str_size, uint8_t *str, uint8_t str_len, uint16_t color_c, uint16_t color_b)
+void LCD_SHOW_STRING(uint16_t x_start, uint16_t y_start, uint16_t str_size, uint8_t *str, uint16_t color_c, uint16_t color_b)
 {
-    for (uint8_t i = 0; i < str_len; i++)
+    while (*str != '\0')
     {
-
-        if (x_start + str_size / 2 <= 240)
+        if (*str == '\n')
+        {
+            y_start += str_size;
+            x_start = 0;
+            *str++;
+        }
+        else if (x_start + str_size / 2 <= 240)
         {
             LCD_SHOW_ASCII(x_start, y_start, str_size, *str++, color_c, color_b);
             x_start += str_size / 2;
@@ -261,6 +266,6 @@ void LCD_SHOW_STRING(uint16_t x_start, uint16_t y_start, uint16_t str_size, uint
             x_start = 0;
             LCD_SHOW_ASCII(x_start, y_start, str_size, *str++, color_c, color_b);
             x_start += str_size / 2;
-        } 
+        }
     }
 }
