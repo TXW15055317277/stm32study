@@ -67,7 +67,8 @@ void LCD_SET_AREA(uint16_t x_start, uint16_t y_start, uint16_t w, uint16_t h);
 // 显示一个英文字符
 void LCD_SHOW_ASCII(uint16_t x_start, uint16_t y_start, uint16_t char_size, uint8_t char_c, uint16_t color_c, uint16_t color_b);
 
-
+// 显示字符串
+void LCD_SHOW_STRING(uint16_t x_start, uint16_t y_start, uint16_t str_size, uint8_t *str, uint8_t str_len, uint16_t color_c, uint16_t color_b);
 
 
 #endif

@@ -244,3 +244,22 @@ void LCD_SHOW_ASCII(uint16_t x_start, uint16_t y_start, uint16_t char_size, uint
         }
     }
 }
+
+void LCD_SHOW_STRING(uint16_t x_start, uint16_t y_start, uint16_t str_size, uint8_t *str, uint8_t str_len, uint16_t color_c, uint16_t color_b)
+{
+    for (uint8_t i = 0; i < str_len; i++)
+    {
+
+        if (x_start + str_size / 2 < 240)
+        {
+            LCD_SHOW_ASCII(x_start, y_start, str_size, *str++, color_c, color_b);
+            x_start += str_size / 2;
+        }
+        else
+        {
+            y_start += str_size;
+            x_start = 0;
+            LCD_SHOW_ASCII(0, y_start, str_size, *str++, color_c, color_b);
+        } 
+    }
+}
