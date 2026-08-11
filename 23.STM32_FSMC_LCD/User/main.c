@@ -10,6 +10,6 @@ int main(void)
     LCD_RefreshConfig();
 
     LCD_SHOW_ASCII(0, 0, 32, 'A', BLACK, WHITE);
-    LCD_SHOW_STRING(160, 0, 32, string, 10, BLACK, WHITE);
+    LCD_SHOW_STRING(224, 0, 32, string, 10, BLACK, WHITE);
 
 }
