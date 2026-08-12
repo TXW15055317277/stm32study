@@ -6,6 +6,7 @@
 #include "DELAY.h"
 #include "stdio.h"
 #include "lcdfont.h"
+#include <math.h>
 
 // 定义读写地址
 #define SRAM_bank1_4 0x6C000000
@@ -70,5 +71,16 @@ void LCD_SHOW_ASCII(uint16_t x_start, uint16_t y_start, uint16_t char_size, uint
 // 显示字符串
 void LCD_SHOW_STRING(uint16_t x_start, uint16_t y_start, uint16_t str_size, uint8_t *str, uint16_t color_c, uint16_t color_b);
 
+// 画点
+void LCD_DRAW_POINT(uint16_t x, uint16_t y, uint16_t width, uint16_t color);
+
+// 画线
+void LCD_DRAW_LINE(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t width, uint16_t color);
+
+// 画圆
+void LCD_DRAW_CIRCLE(uint16_t x_center, uint16_t y_center, uint16_t r, uint16_t width, uint16_t color);
+
+// 画实心圆
+void LCD_FILL_CIRCLE(uint16_t x_center, uint16_t y_center, uint16_t r, uint16_t color);
 
 #endif

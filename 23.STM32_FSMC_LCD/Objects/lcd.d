@@ -39,3 +39,4 @@
 .\objects\lcd.o: Driver\DELAY.h
 .\objects\lcd.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\lcd.o: Driver\lcdfont.h
+.\objects\lcd.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

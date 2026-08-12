@@ -1,5 +1,6 @@
 #include "LCD.h"
 
+
 void LCD_WRITE_CMD(uint16_t LCD_CMD)
 {
     *LCD_addr_cmd = LCD_CMD;
@@ -267,5 +268,79 @@ void LCD_SHOW_STRING(uint16_t x_start, uint16_t y_start, uint16_t str_size, uint
             LCD_SHOW_ASCII(x_start, y_start, str_size, *str++, color_c, color_b);
             x_start += str_size / 2;
         }
+    }
+}
+
+void LCD_DRAW_POINT(uint16_t x, uint16_t y, uint16_t width, uint16_t color)
+{
+    LCD_SET_AREA(x, y, width, width);
+    LCD_WRITE_CMD(0x2C);
+    for (uint16_t i = 0; i < width * width; i++)
+    {
+        LCD_WRITE_DATA(color);
+    }
+}
+
+void LCD_DRAW_LINE(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t width, uint16_t color)
+{
+    if (x1 == x2)
+    {
+        if (y1 < y2)
+        {
+            for (uint16_t y = y1; y < y2; y++)
+            {
+                LCD_DRAW_POINT(x1, y, width, color);
+            }
+        }
+        else
+        {
+            for (uint16_t y = y2; y < y1; y++)
+            {
+                LCD_DRAW_POINT(x1, y, width, color);
+            }
+        }
+    }
+    else
+    {
+        double k = (y2 - y1) / (x2 - x1);
+        double b = y2 - k * x2;
+        if (x1 < x2)
+        {
+            for (uint16_t x = x1; x < x2; x++)
+            {
+                LCD_DRAW_POINT(x, k * x + b, width, color);
+            }
+        }
+        else
+        {
+            for (uint16_t x = x2; x < x1; x++)
+            {
+                LCD_DRAW_POINT(x, k * x + b, width, color);
+            } 
+        }
+    }
+}
+
+void LCD_DRAW_CIRCLE(uint16_t x_center, uint16_t y_center, uint16_t r, uint16_t width, uint16_t color)
+{
+    for (uint16_t selta = 0; selta < 90; selta++)
+    {
+        uint16_t x_delta = r * cos(3.14 * selta / 180);
+        uint16_t y_delta = r * sin(3.14 * selta / 180);
+        LCD_DRAW_POINT(x_center + x_delta, y_center + y_delta, width, color);
+        LCD_DRAW_POINT(x_center - x_delta, y_center + y_delta, width, color);
+        LCD_DRAW_POINT(x_center - x_delta, y_center - y_delta, width, color);
+        LCD_DRAW_POINT(x_center + x_delta, y_center - y_delta, width, color);
+    }
+}
+
+void LCD_FILL_CIRCLE(uint16_t x_center, uint16_t y_center, uint16_t r, uint16_t color)
+{
+    for (uint16_t selta = 0; selta < 90; selta++)
+    {
+        uint16_t x_delta = r * cos(3.14 * selta / 180);
+        uint16_t y_delta = r * sin(3.14 * selta / 180);
+        LCD_DRAW_LINE(x_center - x_delta, y_center + y_delta, x_center + x_delta, y_center + y_delta, 2, color);
+        LCD_DRAW_LINE(x_center - x_delta, y_center - y_delta, x_center + x_delta, y_center - y_delta, 2, color);
     }
 }

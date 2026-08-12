@@ -42,3 +42,4 @@
 .\objects\main.o: .\Driver\FSMC_LCD.h
 .\objects\main.o: .\Driver\DELAY.h
 .\objects\main.o: .\Driver\lcdfont.h
+.\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
