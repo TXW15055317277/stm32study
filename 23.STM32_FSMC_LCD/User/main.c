@@ -7,7 +7,7 @@ int main(void)
     FSMC_LCD_Init_();
     LCD_RefreshConfig();
 
-    LCD_SHOW_STRING(16, 0, 32, "zhangyuqing\ntaoxuewen", BLACK, WHITE);
+    LCD_SHOW_STRING(0, 0, 32, "zhangyuqing\ntaoxuewen", BLACK, WHITE);
     LCD_FILL_CIRCLE(120, 160, 50, GREEN);
 
 }
